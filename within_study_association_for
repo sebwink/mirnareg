@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+DATASET=$1
+
+mrna=data/rnaseq/tcga.$DATASET.rnaseq.tumor.log2fold.csv.gz
+mirna=data/mirnaseq/tcga.$DATASET.mirna.tumor.log2fold.csv.gz
+cnv=data/cnv/tcga.$DATASET.cnv.tumor.segment.means.csv.gz
+methylation=data/methylation/$DATASET.450k.methylation.tumor.log2fold.csv.gz
+targets=data/targets/diana.mirna.targets.hsa.ecm.csv.gz
+out=results/tcga.$DATASET.regression.ecm.pairs
+
+python3 within_study_association.py --mrna $mrna \
+                                   --mirna $mirna \
+                                   --cnv $cnv \
+								   --methylation $methylation \
+                                   --targets $targets \
+                                   --out $out
